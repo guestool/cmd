@@ -9,7 +9,7 @@ $DownloadURL = 'https://github.com/guestool/cmd/blob/main/IP_scan.bat'
 
 $rand = Get-Random -Maximum 99999999
 $isAdmin = [bool]([Security.Principal.WindowsIdentity]::GetCurrent().Groups -match 'S-1-5-32-544')
-$FilePath = if ($isAdmin) { "$env:SystemRoot\Temp\IP_$rand.cmd" } else { "$env:TEMP\IP_$rand.cmd" }
+$FilePath = if ($isAdmin) { "$env:SystemRoot\Temp\IP_$rand.bat" } else { "$env:TEMP\IP_$rand.bat" }
 
 try {
     $response = Invoke-WebRequest -Uri $DownloadURL -UseBasicParsing
@@ -25,5 +25,5 @@ Set-Content -Path $FilePath -Value $content
 
 Start-Process $FilePath $ScriptArgs -Wait
 
-$FilePaths = @("$env:TEMP\IP*.cmd", "$env:SystemRoot\Temp\IP*.cmd")
+$FilePaths = @("$env:TEMP\IP*.bat", "$env:SystemRoot\Temp\IP*.bat")
 foreach ($FilePath in $FilePaths) { Get-Item $FilePath | Remove-Item }
